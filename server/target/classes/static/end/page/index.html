@@ -1,0 +1,200 @@
+﻿
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="content-type" content="no-cache, must-revalidate" />
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"/>
+    <title>home</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/element/index.css">
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="wrapper" v-cloak>
+    <!--导航栏-->
+    <div style="width: 260px; float: left">
+        <div class="sideMenu">
+            <div class="head">图书馆预约与占座小程序</div>
+            <ul>
+                <li class="nLi on">
+                    <h3><i class="fa fa-dashboard"></i>首页<span class="fa fa-angle-up arrow"></span></h3>
+                    <ul class="sub">
+                        <li><a href="index.html" class="active"><i class="fa fa-dashboard"></i>首页</a></li>
+                    </ul>
+                </li>
+                <li class="nLi on">
+                    <h3><i class="fa fa fa-dashboard icon"></i>信息展示<span class="fa fa-angle-up arrow"></span>
+                    </h3>
+                    <ul class="sub">
+						<li>
+                            <a href="userInfo.html"><i class="fa fa-table"></i>用户信息</a>
+                        </li>
+                        <li>
+                            <a href="userpaihang.html"><i class="fa fa-table"></i>用户排行信息</a>
+                        </li>
+                        <li>
+                            <a href="adminInfo.html"><i class="fa fa-table"></i>管理员信息</a>
+                        </li>
+                        <li>
+                            <a href="advertiserInfo.html"><i class="fa fa-table"></i>公告信息</a>
+                        </li>
+                        <li>
+                            <a href="zuoweileixing.html"><i class="fa fa-table"></i>座位分布信息</a>
+                        </li>
+                        <li>
+                            <a href="zuoweixinxi.html"><i class="fa fa-table"></i>座位信息</a>
+                        </li>
+                        <li>
+                            <a href="yuyuezuowei.html"><i class="fa fa-table"></i>预约信息</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="personalPage"><i class="fa fa-user"></i>个人信息</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nLi">
+                    <h3><i class="fa fa-unlock-alt"></i>修改密码<span class="fa fa-angle-up arrow"></span></h3>
+                    <ul class="sub">
+                        <li>
+                            <a href="updatePassword.html"><i class="fa fa-unlock-alt"></i>修改密码</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nLi">
+                    <h3><i class="fa fa-power-off"></i>退出登录<span class="fa fa-angle-up arrow"></span></h3>
+                    <ul class="sub">
+                        <li>
+                            <a href="javascript:void(0)" @click="logout"><i class="fa fa-power-off"></i>退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 主体 -->
+    <div style="margin-left: 260px;">
+        <!-- 头部开始 -->
+        <div style="width: 100%;height: 60px;line-height: 60px;  background-color: cornflowerblue; display: flex">
+            <div style="flex: 3;font-size: 16px; margin: 0 10px"><a href="/front/index.html" style="color: white; text-decoration: none">跳转到前台首页</a></div>
+            <div style="flex: 1; text-align: right">
+                <a href="javascript:void(0)" @click="personalPage" class="fa fa-user" style="font-size: 16px; color: white; margin:0 10px">欢迎你，{{user.name}}</a>
+                <a href="javascript:void(0)" @click="logout" class="fa fa-sign-out" style="font-size: 16px; color: white; margin:0 10px">退出</a>
+            </div>
+        </div>
+
+        <!-- 主体开始 -->
+        <div id="main" style="padding: 0 20px">
+        </div>
+        <!-- 主体结束 -->
+    </div>
+</div>
+
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/my.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script src="../js/echarts.min.js"></script>
+<script src="../js/element/index.js"></script>
+
+<script>
+
+    new Vue({
+        el: "#wrapper",
+        data: {
+            user: {},
+            authority: [],
+            totalUser: 0,
+            totalComment: 0,
+            totalPrice: 0,
+            totalShopping: 0,
+            echartsShowLeftArr: [],
+            echartsShowRightArr: [],
+            echartsType: 'pie'
+        },
+        created: function () {
+            this.user = JSON.parse(localStorage.getItem("user"));
+
+            axios.get("/authority").then(res => {
+                if (res.data.code === '0') {
+                    this.authority = res.data.data;
+                } else {
+                    msg('error', res.data.msg);
+                }
+            });
+
+            axios.get("/echarts/getTotal").then(res => {
+                if (res.data.code === '0') {
+                    let map = res.data.data;
+                    this.totalUser = map['totalUser'];
+                    this.totalComment = map['totalComment'];
+                    this.totalPrice = map['totalPrice'];
+                    this.totalShopping = map['totalShopping'];
+                }
+            });
+
+            this.drawLine();
+        },
+        methods: {
+            drawLine() {
+                axios.get('/echarts/get/price').then(res => {
+                    // 基于准备好的dom，初始化echarts实例
+                    this.echartsShowLeftArr = res.data.data;
+                    if (this.echartsShowLeftArr.length) {
+                        let myChart = echarts.init(document.getElementById('left'));
+                        let option = this.getEchartsType(this.echartsShowLeftArr, this.echartsType);
+                        myChart.setOption(option, true);
+                    }
+                });
+                axios.get('/echarts/get/shopping').then(res => {
+                    // 基于准备好的dom，初始化echarts实例
+                    this.echartsShowRightArr = res.data.data;
+                    if (this.echartsShowRightArr.length) {
+                        let myChart = echarts.init(document.getElementById('right'));
+                        let option = this.getEchartsType(this.echartsShowRightArr, this.echartsType);
+                        myChart.setOption(option, true);
+                    }
+                });
+            },
+            selectEchartsType() {
+                let leftChart = echarts.init(document.getElementById('left'));
+                let leftOption = this.getEchartsType(this.echartsShowLeftArr, this.echartsType);
+                leftChart.setOption(leftOption, true);
+
+                let rightChart = echarts.init(document.getElementById('right'));
+                let rightOption = this.getEchartsType(this.echartsShowRightArr, this.echartsType);
+                rightChart.setOption(rightOption, true);
+            },
+            getEchartsType(echartsArr, type) {
+                for (let item of echartsArr) {
+                    if (item.series[0].type === type) {
+                        return item;
+                    }
+                }
+            },
+            logout() {
+                logout();
+            }
+        }
+    });
+
+
+</script>
+
+</body>
+</html>

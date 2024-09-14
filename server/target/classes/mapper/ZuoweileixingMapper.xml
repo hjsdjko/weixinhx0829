@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ZuoweileixingDao">
+
+    <select id="findByName" resultType="com.example.vo.ZuoweileixingVo">
+        select `zuoweileixing`.* from `zuoweileixing`
+
+        where 1 = 1
+        <if test="name != null and name != '' and name != 'all'">
+            and `zuoweileixing`.`leixing` like concat('%', #{name}, '%')
+        </if>
+        order by `zuoweileixing`.id
+    </select>
+
+</mapper>

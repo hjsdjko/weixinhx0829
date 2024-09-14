@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.YuyuezuoweiDao">
+    <resultMap id="BaseResultMap" type="com.example.entity.Yuyuezuowei">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="yuyuehao" jdbcType="VARCHAR" property="yuyuehao" />
+        <result column="leixing" jdbcType="VARCHAR" property="leixing" />
+        <result column="zuoweihao" jdbcType="VARCHAR" property="zuoweihao" />
+        <result column="yuyueshijian" jdbcType="VARCHAR" property="yuyueshijian" />
+        <result column="yonghuming" jdbcType="VARCHAR" property="yonghuming" />
+        <result column="xingming" jdbcType="VARCHAR" property="xingming" />
+        <result column="shoujihao" jdbcType="VARCHAR" property="shoujihao" />
+        <result column="quxiaoyuyueshijian" jdbcType="VARCHAR" property="quxiaoyuyueshijian" />
+        <result column="issh" jdbcType="VARCHAR" property="issh" />
+        <result column="shhf" jdbcType="VARCHAR" property="shhf" />
+
+        <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, yuyuehao,leixing,zuoweihao,yuyueshijian,yonghuming,xingming,shoujihao,quxiaoyuyueshijian,issh,shhf, addtime
+  </sql>
+    <select id="getAllYiYuyue"  resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select   <include refid="Base_Column_List" /> from yuyuezuowei  where 1=1
+        <if test="leixing!=null">
+            and leixing =#{leixing}
+        </if>
+        <if test="yonghuming!=null">
+            and yonghuming != #{yonghuming}
+        </if>
+        and TO_DAYS(quxiaoyuyueshijian) = to_days(now())
+        and issh != '退座'
+    </select>
+    <select id="getAllMyYuyue"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select   <include refid="Base_Column_List" /> from yuyuezuowei  where 1=1
+        <if test="yonghuming!=null">
+            and yonghuming = #{yonghuming}
+        </if>
+        and TO_DAYS(quxiaoyuyueshijian) = to_days(now())
+        and issh != '退座'
+    </select>
+    <select id="getAllMyYuyueHis"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select   <include refid="Base_Column_List" /> from yuyuezuowei  where 1=1
+        <if test="yonghuming!=null">
+            and yonghuming = #{yonghuming}
+        </if>
+    </select>
+</mapper>

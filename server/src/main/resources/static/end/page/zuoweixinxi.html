@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="content-type" content="no-cache, must-revalidate" />
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"/>
+    <title>座位信息</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/element/index.css">
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        .nav-block {
+            background-color: #428bca;
+            height: 80px;
+            line-height: 80px;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        .badge {
+            background-color: white;
+            color: black;
+            font-size: 16px;
+            padding: 3px 10px;
+        }
+
+        .nav-block a {
+            color: white;
+        }
+
+        .navbar-inverse {
+            background-color: #428bca;
+            border: none;
+        }
+
+        .logo h1 {
+            color: white;
+        }
+        .templatemo-submenu li a {
+            margin-left: 35px;
+        }
+        [v-cloak] {
+            display: none;
+        }
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 178px;
+            height: 178px;
+            line-height: 178px;
+            text-align: center;
+        }
+        .avatar {
+            width: 178px;
+            height: 178px;
+            display: block;
+        }
+        .el-upload__input{
+            display: none !important;
+        }
+        .avatar-table{
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper" v-cloak>
+    <!--导航栏-->
+    <div style="width: 260px; float: left">
+        <div class="sideMenu">
+            <div class="head">图书馆预约与占座小程序</div>
+            <ul>
+                <li class="nLi">
+                    <h3><i class="fa fa-dashboard"></i>首页<span class="fa fa-angle-up arrow"></span></h3>
+                    <ul class="sub">
+                        <li><a href="index.html"><i class="fa fa-dashboard"></i>首页</a></li>
+                    </ul>
+                </li>
+                <li class="nLi on">
+                    <h3><i class="fa fa fa-dashboard icon"></i>信息展示<span class="fa fa-angle-up arrow"></span>
+                    </h3>
+                    <ul class="sub">
+						<li>
+							<a href="userInfo.html"><i class="fa fa-table"></i>用户信息</a>
+						</li> <li>
+                        <a href="userpaihang.html"><i class="fa fa-table"></i>用户排行信息</a>
+                    </li><li>
+                            <a href="adminInfo.html"><i class="fa fa-table"></i>管理员信息</a>
+                        </li>
+                        <li>
+                            <a href="advertiserInfo.html"><i class="fa fa-table"></i>公告信息</a>
+                        </li>
+                        <li>
+                            <a href="zuoweileixing.html"><i class="fa fa-table"></i>座位分布信息</a>
+                        </li>
+                        <li>
+                            <a href="zuoweixinxi.html" class="active"><i class="fa fa-table"></i>座位信息</a>
+                        </li>
+                        <li>
+                            <a href="yuyuezuowei.html"><i class="fa fa-table"></i>预约信息</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" @click="personalPage"><i class="fa fa-user"></i>个人信息</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nLi">
+                    <h3><i class="fa fa-unlock-alt"></i>修改密码<span class="fa fa-angle-up arrow"></span></h3>
+                    <ul class="sub">
+                        <li>
+                            <a href="updatePassword.html"><i class="fa fa-unlock-alt"></i>修改密码</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nLi">
+                    <h3><i class="fa fa-power-off"></i>退出登录<span class="fa fa-angle-up arrow"></span></h3>
+                    <ul class="sub">
+                        <li>
+                            <a href="javascript:void(0)" @click="logout"><i class="fa fa-power-off"></i>退出登录</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 主体 -->
+    <div style="margin-left: 260px;">
+        <!-- 头部开始 -->
+        <div style="width: 100%;height: 60px;line-height: 60px;  background-color: cornflowerblue; display: flex">
+            <div style="flex: 3;font-size: 16px; margin: 0 10px"><a href="/front/index.html" style="color: white; text-decoration: none">跳转到前台首页</a></div>
+            <div style="flex: 1; text-align: right">
+                <a href="javascript:void(0)" @click="personalPage" class="fa fa-user" style="font-size: 16px; color: white; margin:0 10px">欢迎你，{{user.yonghuming}}</a>
+                <a href="javascript:void(0)" @click="logout" class="fa fa-sign-out" style="font-size: 16px; color: white; margin:0 10px">退出</a>
+            </div>
+        </div>
+        <!-- 头部结束 -->
+
+        <!-- 主体开始 -->
+        <div style="padding: 0 20px">
+            <div>
+                <div style="color: #0094ff; font-style: italic; border-bottom: 1px dashed #0094ff; padding: 10px 0; margin-bottom: 20px; font-size: 30px;">座位信息</div>
+            </div>
+
+            <!-- 表格主体-->
+            <div style="margin-top: 10px">
+                <div style="border: 1px solid #ccc;">
+                    <div style="padding: 10px; border-bottom: 1px solid #ccc; color: white; background-color: cornflowerblue;">座位信息表</div>
+                    <div style="border: 1px solid #ccc; padding: 10px">
+                        <div class="table-responsive">
+                            <div class="nx-table-header" style="position: relative">
+                                <input type="text" placeholder="请输入搜索内容" v-model="name" @keyup.enter="loadTable(1)">
+                                <i class="glyphicon glyphicon-search" style="margin-left: -20px"></i>
+                            </div>
+                            <table class="table table-striped table-bordered table-hover" style="margin-top: 10px">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>类型</th>
+                                    <th>座位号</th>
+                                    <th>状态</th>
+                                    <th>楼号</th>
+                                    <th>房间号</th>
+
+
+                                    <th>添加时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody v-for="obj in objs">
+                                <tr>
+                                    <td>{{obj.id}}</td>
+                                    <td>{{obj.leixing}}</td>
+                                    <td>{{obj.zuoweihao}}</td>
+                                    <td>{{obj.zhuangtai}}</td>
+                                    <td>{{obj.louhao}}</td>
+                                    <td>{{obj.fangjianhao}}</td>
+
+                                    <td>{{obj.addtime}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-xs" v-on:click="del(obj.id)">删除</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" v-bind:class="{ disabled: preActive }">
+                                        <a class="page-link" href="javascript:void(0)"
+                                           v-on:click="loadTable(pageInfo.pageNum - 1)">上一页</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)" v-if="pageInfo.pageNum > 1" v-on:click="loadTable(pageInfo.pageNum - 1)">{{pageInfo.pageNum - 1}}</a>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <a class="page-link" aria-disabled="true" href="javascript:void(0)">{{pageInfo.pageNum}}</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="javascript:void(0)" v-if="pageInfo.hasNextPage" v-on:click="loadTable(pageInfo.pageNum + 1)">{{pageInfo.pageNum + 1}}</a>
+                                    </li>
+                                    <li class="page-item" v-bind:class="{ disabled: nextActive }">
+                                        <a class="page-link" href="javascript:void(0)" v-on:click="loadTable(pageInfo.hasNextPage? (pageInfo.pageNum + 1) : pageInfo.pageNum)">下一页</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 表格主体结束-->
+        </div>
+        <!-- 主体结束 -->
+    </div>
+</div>
+
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/nav.js"></script>
+<script src="../js/my.js"></script>
+<script src="../js/vue2.6.11/vue.min.js"></script>
+<script src="../js/vue2.6.11/axios.js"></script>
+<script src="../js/element/index.js"></script>
+
+<script>
+    function msg(type, msg) {
+        Vue.prototype.$message({
+            type: type, // success（成功）、warning（警告）, error(错误)
+            message: msg,
+            duration: 2000,
+            offset: 100,
+            center: true
+        })
+    }
+
+    new Vue({
+        el: '#wrapper',
+        data: {
+
+            authority: [],
+            permission: [],
+            storeUser: JSON.parse(localStorage.getItem("user")),
+            name: '',
+            user: {},
+            imageUrl: '',
+            avater:null,
+            objs: [],
+            pageInfo: {},
+            preActive: true,
+            nextActive: true,
+            entity: {
+                sex: '男'
+            }
+        },
+        created: function () {
+
+            this.loadTable(1);
+
+            this.user = JSON.parse(localStorage.getItem('user'));
+
+        },
+        methods: {
+            loadTable(pageNum) {
+                let name = this.name === '' ? "all" : this.name;
+                axios.get("/zuoweixinxi/page/" + name + "?pageNum=" + pageNum).then(res => {
+                    if (res.data.code === '0') {
+                        this.objs = res.data.data.list;
+                        this.pageInfo = res.data.data;
+                        this.preActive = !(this.pageInfo.hasPreviousPage);
+                        this.nextActive = !(this.pageInfo.hasNextPage);
+                    } else {
+                        msg('error', res.data.msg);
+                    }
+                });
+            },
+            init(o) {
+                this.entity = JSON.parse(JSON.stringify(o));
+                $('#mod').modal('show');
+            },
+            add() {
+                this.entity = {sex:'男'};
+                $('#mod').modal('show');
+            },
+            update() {
+                if (checkValid(this.entity)) {
+                    if (!this.entity.id) {
+                        axios.post(
+                            "/zuoweixinxi", this.entity
+                        ).then(res => {
+                            if (res.data.code === '0') {
+                                msg('success', '添加成功');
+                                $('#mod').modal('hide');
+                                this.loadTable(1);
+                            } else {
+                                msg('error', res.data.msg);
+                            }
+                        })
+                    } else {
+                        axios.put(
+                            "/zuoweixinxi", this.entity
+                        ).then(res => {
+                            if (res.data.code === '0') {
+                                msg('success', '更新成功');
+                                $('#mod').modal('hide');
+                                this.loadTable(1);
+                            } else {
+                                msg('error', res.data.msg);
+                            }
+                        })
+                    }
+                }
+            },
+            del(id) {
+                let _this = this;
+                this.$confirm('确认删除？', '系统提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    cancelButtonClass: 'btn-custom-cancel',
+                    type: 'warning'
+                }).then(function(){
+                    axios.delete("/zuoweixinxi/" + id).then(res => {
+                        if (res.data.code === '0') {
+                            msg('success', '删除成功');
+                            _this.loadTable(1);
+                        } else {
+                            msg('error', res.data.msg);
+                        }
+                    });
+                }).catch(function() {
+                    console.log("取消成功！");
+                });
+            },
+            logout() {
+                logout();
+            }
+        }
+    })
+</script>
+</body>
+</html>
